@@ -53,14 +53,15 @@
 __ALIGN_BEGIN static UCHAR tx_byte_pool_buffer[TX_APP_MEM_POOL_SIZE] __ALIGN_END;
 static TX_BYTE_POOL tx_app_byte_pool;
 
-/* USER CODE BEGIN NX_Pool_Buffer */
-#if defined ( __ICCARM__ ) /* IAR Compiler */
-#pragma location = ".NetXPoolSection"
-#elif defined ( __CC_ARM ) /* MDK ARM Compiler */
-__attribute__((section(".NetXPoolSection")))
-#elif defined ( __GNUC__ ) /* GNU Compiler */
-__attribute__((section(".NetXPoolSection")))
+/* USER CODE BEGIN FX_Pool_Buffer */
+/* USER CODE END FX_Pool_Buffer */
+#if defined ( __ICCARM__ )
+#pragma data_alignment=4
 #endif
+__ALIGN_BEGIN static UCHAR fx_byte_pool_buffer[FX_APP_MEM_POOL_SIZE] __ALIGN_END;
+static TX_BYTE_POOL fx_app_byte_pool;
+
+/* USER CODE BEGIN NX_Pool_Buffer */
 /* USER CODE END NX_Pool_Buffer */
 #if defined ( __ICCARM__ )
 #pragma data_alignment=4
@@ -93,7 +94,7 @@ VOID tx_application_define(VOID *first_unused_memory)
   if (tx_byte_pool_create(&tx_app_byte_pool, "Tx App memory pool", tx_byte_pool_buffer, TX_APP_MEM_POOL_SIZE) != TX_SUCCESS)
   {
     /* USER CODE BEGIN TX_Byte_Pool_Error */
-    Error_Handler();
+
     /* USER CODE END TX_Byte_Pool_Error */
   }
   else
@@ -107,7 +108,7 @@ VOID tx_application_define(VOID *first_unused_memory)
     if (App_ThreadX_Init(memory_ptr) != TX_SUCCESS)
     {
       /* USER CODE BEGIN  App_ThreadX_Init_Error */
-      Error_Handler();
+
       /* USER CODE END  App_ThreadX_Init_Error */
     }
 
@@ -117,10 +118,36 @@ VOID tx_application_define(VOID *first_unused_memory)
 
   }
 
+  if (tx_byte_pool_create(&fx_app_byte_pool, "Fx App memory pool", fx_byte_pool_buffer, FX_APP_MEM_POOL_SIZE) != TX_SUCCESS)
+  {
+    /* USER CODE BEGIN FX_Byte_Pool_Error */
+
+    /* USER CODE END FX_Byte_Pool_Error */
+  }
+  else
+  {
+    /* USER CODE BEGIN FX_Byte_Pool_Success */
+
+    /* USER CODE END FX_Byte_Pool_Success */
+
+    memory_ptr = (VOID *)&fx_app_byte_pool;
+
+    if (MX_FileX_Init(memory_ptr) != FX_SUCCESS)
+    {
+      /* USER CODE BEGIN MX_FileX_Init_Error */
+
+      /* USER CODE END MX_FileX_Init_Error */
+    }
+
+    /* USER CODE BEGIN MX_FileX_Init_Success */
+
+    /* USER CODE END MX_FileX_Init_Success */
+  }
+
   if (tx_byte_pool_create(&nx_app_byte_pool, "Nx App memory pool", nx_byte_pool_buffer, NX_APP_MEM_POOL_SIZE) != TX_SUCCESS)
   {
     /* USER CODE BEGIN NX_Byte_Pool_Error */
-    Error_Handler();
+
     /* USER CODE END NX_Byte_Pool_Error */
   }
   else
@@ -134,7 +161,7 @@ VOID tx_application_define(VOID *first_unused_memory)
     if (MX_NetXDuo_Init(memory_ptr) != NX_SUCCESS)
     {
       /* USER CODE BEGIN MX_NetXDuo_Init_Error */
-      Error_Handler();
+
       /* USER CODE END MX_NetXDuo_Init_Error */
     }
 

@@ -56,11 +56,11 @@
 /* #define HAL_IWDG_MODULE_ENABLED */
 /* #define HAL_LPTIM_MODULE_ENABLED */
 /* #define HAL_LTDC_MODULE_ENABLED */
-#define HAL_QSPI_MODULE_ENABLED
+/* #define HAL_QSPI_MODULE_ENABLED */
 /* #define HAL_RNG_MODULE_ENABLED */
-#define HAL_RTC_MODULE_ENABLED
+/* #define HAL_RTC_MODULE_ENABLED */
 /* #define HAL_SAI_MODULE_ENABLED */
-/* #define HAL_SD_MODULE_ENABLED */
+#define HAL_SD_MODULE_ENABLED
 /* #define HAL_MMC_MODULE_ENABLED */
 /* #define HAL_SPDIFRX_MODULE_ENABLED */
 #define HAL_SPI_MODULE_ENABLED
@@ -148,7 +148,7 @@
 #define  VDD_VALUE                    3300U /*!< Value of VDD in mv */
 #define  TICK_INT_PRIORITY            ((uint32_t)15U) /*!< tick interrupt priority */
 #define  USE_RTOS                     0U
-#define  PREFETCH_ENABLE              1U
+#define  PREFETCH_ENABLE              0U
 #define  ART_ACCELERATOR_ENABLE        0U /* To enable instruction cache and prefetch */
 
 #define  USE_HAL_ADC_REGISTER_CALLBACKS         0U /* ADC register callback disabled       */
@@ -210,7 +210,7 @@
 #define MAC_ADDR5   0U
 
 /* Definition of the Ethernet driver buffers size and count */
-#define ETH_RX_BUF_SIZE                1536 /* buffer size for receive               */
+#define ETH_RX_BUF_SIZE                1528 /* buffer size for receive               */
 #define ETH_TX_BUF_SIZE                ETH_MAX_PACKET_SIZE /* buffer size for transmit              */
 #define ETH_RXBUFNB                    ((uint32_t)4U)       /* 4 Rx buffers of size ETH_RX_BUF_SIZE  */
 #define ETH_TXBUFNB                    ((uint32_t)4U)       /* 4 Tx buffers of size ETH_TX_BUF_SIZE  */

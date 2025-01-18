@@ -1,9 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    app_threadx.h
+  * @file    app_filex.h
   * @author  MCD Application Team
-  * @brief   ThreadX applicative header file
+  * @brief   FileX applicative header file
   ******************************************************************************
   * @attention
   *
@@ -18,16 +18,17 @@
   */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __APP_THREADX_H__
-#define __APP_THREADX_H__
+#ifndef __APP_FILEX_H__
+#define __APP_FILEX_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "tx_api.h"
+#include "fx_api.h"
 
+#include "fx_stm32_sd_driver.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -49,8 +50,8 @@ extern "C" {
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
-UINT App_ThreadX_Init(VOID *memory_ptr);
-void MX_ThreadX_Init(void);
+UINT MX_FileX_Init(VOID *memory_ptr);
+
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
@@ -63,8 +64,7 @@ void MX_ThreadX_Init(void);
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-
 #ifdef __cplusplus
 }
 #endif
-#endif /* __APP_THREADX_H__ */
+#endif /* __APP_FILEX_H__ */

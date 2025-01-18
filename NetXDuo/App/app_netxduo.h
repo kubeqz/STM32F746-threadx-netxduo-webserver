@@ -32,8 +32,10 @@ extern "C" {
 #include "nx_stm32_eth_driver.h"
 
 /* USER CODE BEGIN Includes */
-#include "main.h"
-#include "nxd_dhcp_client.h"
+#include   "main.h"
+#include   "nxd_dhcp_client.h"
+#include   "nx_web_http_server.h"
+#include   "app_filex.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -48,22 +50,14 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-#define PRINT_IP_ADDRESS(addr)             do { \
-                                                printf("STM32 %s: %lu.%lu.%lu.%lu \n", #addr, \
-                                                (addr >> 24) & 0xff, \
-                                                (addr >> 16) & 0xff, \
-                                                (addr >> 8) & 0xff, \
-                                                addr& 0xff);\
-                                           }while(0)
 
-#define PRINT_DATA(addr, port, data)       do { \
-                                                printf("[%lu.%lu.%lu.%lu:%u] -> '%s' \n", \
-                                                (addr >> 24) & 0xff, \
-                                                (addr >> 16) & 0xff, \
-                                                (addr >> 8) & 0xff,  \
-                                                (addr & 0xff), port, data); \
-                                           } while(0)
-
+#define PRINT_IP_ADDRESS(addr) do { \
+                                    printf("%s: %lu.%lu.%lu.%lu \n", #addr, \
+                                    (addr >> 24) & 0xff, \
+                                    (addr >> 16) & 0xff, \
+                                    (addr >> 8) & 0xff, \
+                                     addr& 0xff);\
+                                  }while(0)
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -75,24 +69,43 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define PAYLOAD_SIZE             1536
-#define NX_PACKET_POOL_SIZE      (( PAYLOAD_SIZE + sizeof(NX_PACKET)) * 10)
-#define WINDOW_SIZE              512
+/* Pirority IP creation */
+#define DEFAULT_MEMORY_SIZE              1024
+#define DEFAULT_MAIN_PRIORITY            10
+#define TOGGLE_LED_PRIORITY              15
+#define DEFAULT_PRIORITY                 5
+#define LINK_PRIORITY                    11
+ /*Packet payload size */
+#define PACKET_PAYLOAD_SIZE              1536
+/* Packet pool size */
+#define NX_PACKET_POOL_SIZE              ((1536 + sizeof(NX_PACKET)) * 50)
+ /* APP Cache size  */
+#define ARP_CACHE_SIZE                   1024
+ /* Wait option for getting @IP */
+#define WAIT_OPTION                      1000
+/* Entry input for Main thread */
+#define ENTRY_INPUT                      0
+/* Main Thread priority */
+#define THREAD_PRIO                      4
+/* Main Thread preemption threshold */
+#define THREAD_PREEMPT_THRESHOLD         4
+/* Web application size */
+#define WEB_APP_SIZE                     2048
+/* Memory size */
+#define MEMORY_SIZE                      2048
+/* HTTP connection port */
+#define CONNECTION_PORT                  80
+/* Server packet size */
+#define SERVER_PACKET_SIZE               (NX_WEB_HTTP_SERVER_MIN_PACKET_SIZE * 2)
+/* Server stack */
+#define SERVER_STACK                     4096
 
-#define DEFAULT_MEMORY_SIZE      1024
-#define DEFAULT_PRIORITY         10
+/* Server pool size */
+#define SERVER_POOL_SIZE                 (SERVER_PACKET_SIZE * 4)
+/* SD Driver information pointer */
+#define SD_DRIVER_INFO_POINTER           0
 
-#define LINK_PRIORITY            11
-
-#define NULL_ADDRESS             0
-
-#define DEFAULT_PORT             6000
-#define TCP_SERVER_PORT          6001
-#define TCP_SERVER_ADDRESS       IP_ADDRESS(10, 157, 11, 113)
-
-#define MAX_PACKET_COUNT         100
-#define DEFAULT_MESSAGE          "TCP Client on STM32F767-Nucleo"
-#define DEFAULT_TIMEOUT          10 * NX_IP_PERIODIC_RATE
+#define NULL_IP_ADDRESS                  IP_ADDRESS(0,0,0,0)
 /* USER CODE END PD */
 
 /* USER CODE BEGIN 1 */

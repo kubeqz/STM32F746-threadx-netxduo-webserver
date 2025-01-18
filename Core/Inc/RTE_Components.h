@@ -24,9 +24,10 @@
 /* Defines ------------------------------------------------------------------*/
 /* STMicroelectronics.X-CUBE-AZRTOS-F7.1.1.0 */
 #define FILEX_ENABLED
+#define FX_SD_INTERFACE
+#define LX_NOR_SIMULATOR_DRIVER
 #define NX_ETH_INTERFACE_ENABLED
 #define LAN8742
-#define MX25L512
 #define THREADX_ENABLED
 #define NETXDUO_ENABLED
 #define NX_ADDONS_WEB_SERVER_ENABLED

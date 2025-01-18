@@ -44,8 +44,10 @@ _Min_Stack_Size = 0x400; /* required amount of stack */
 /* Memories definition */
 MEMORY
 {
-  RAM    (xrw)    : ORIGIN = 0x20000000,   LENGTH = 320K
-  FLASH    (rx)    : ORIGIN = 0x8000000,   LENGTH = 1024K
+  RAM    (xrw)    : ORIGIN = 0x20000000, LENGTH = 307K
+  Memory_B1(xrw)  : ORIGIN = 0x2004C000, LENGTH = 0xA0
+  Memory_B2(xrw)  : ORIGIN = 0x2004C0A0, LENGTH = 0xA0
+  FLASH    (rx)   : ORIGIN = 0x8000000,  LENGTH = 1024K
 }
 
 /* Sections */
@@ -175,6 +177,11 @@ SECTIONS
     . = ALIGN(8);
   } >RAM
 
+  .nx_data 0x20030200 (NOLOAD):
+  {
+   *(.NetXPoolSection)
+  } >RAM
+
   /* Remove information from the compiler libraries */
   /DISCARD/ :
   {
@@ -184,4 +191,7 @@ SECTIONS
   }
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
+  
+  .RxDescripSection (NOLOAD) : { *(.RxDescripSection) } >Memory_B1
+  .TxDescripSection (NOLOAD): { *(.TxDescripSection) } >Memory_B2
 }
